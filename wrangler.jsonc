@@ -1,25 +1,25 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "garmin-mcp",
+  "name": "garminmcp",
   "main": "src/index.ts",
   "compatibility_date": "2026-10-20",
   // global_fetch_strictly_public is required by the OAuth provider to fetch
   // Client ID Metadata Documents safely.
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
-  // Public URL: https://garmin-mcp.<subdomain>.workers.dev. Preview URLs per
+  // Public URL: https://garminmcp.inseach.workers.dev. Preview URLs per
   // version are off, so the only OAuth issuer is the production origin.
   "workers_dev": true,
   "preview_urls": false,
   "observability": { "enabled": true },
   // OAuth clients, grants and tokens, plus the cached Garmin bearer token.
-  // Without an id, the first `wrangler deploy` provisions the namespace
-  // ("garmin-mcp-oauth-kv") and later deploys keep using it.
-  "kv_namespaces": [{ "binding": "OAUTH_KV" }],
+  // The namespace ("garmin-mcp-oauth-kv") is created up front and pinned by id,
+  // so deploys from GitHub Actions always bind the same one.
+  "kv_namespaces": [{ "binding": "OAUTH_KV", "id": "fa3f03758e9d42adb866bacca6e6663f" }],
   "vars": {
     // "global" (connect.garmin.com) or "cn" (connect.garmin.cn)
     "GARMIN_REGION": "global",
     // IANA time zone used to resolve "today" when a date is omitted
-    "TIMEZONE": "Europe/Madrid"
+    "TIMEZONE": "Asia/Shanghai"
   },
   // ACCESS_AUD: audience tag of the Cloudflare Access application that
   // protects /authorize.
